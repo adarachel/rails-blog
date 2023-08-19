@@ -16,7 +16,4 @@ class Post < ApplicationRecord
   end
 
   after_save :update_post_counter
-
-  private
-
 end
