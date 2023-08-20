@@ -52,7 +52,7 @@ gem 'bootsnap', require: false
 
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
-  gem 'rspec-rails', '~> 5.0'
+  gem 'rspec-rails'
 end
 
 group :development do
@@ -65,6 +65,8 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 end
+
+gem 'rspec'
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]

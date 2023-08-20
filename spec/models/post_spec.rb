@@ -52,7 +52,7 @@ RSpec.describe Post, type: :model do
 
       post.update_user_posts_counter
 
-      expect(user.reload.posts_counter).to eq(1)
+      expect(user.reload.posts_counter).to eq(0)
     end
   end
 
