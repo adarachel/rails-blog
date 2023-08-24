@@ -3,6 +3,10 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'rails-controller-testing'
 
+gem 'factory_bot_rails'
+
+gem 'faker'
+
 gem 'rspec'
 
 gem 'rubocop', '>= 1.0', '< 2.0'

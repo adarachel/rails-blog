@@ -1,6 +1,12 @@
-<h1>Posts by <%= @user.name %></h1>
+<% if @user %>
+  <h1><%= @user.name %>'s Posts</h1>
+<% end %>
+
 <ul>
   <% @posts.each do |post| %>
-    <li><%= post.title %></li>
+    <li>
+      <%= post.title %>
+      <%= link_to 'Delete', delete_post_path(post), method: :delete, data: { confirm: 'Are you sure you want to delete this post?' } %>
+    </li>
   <% end %>
 </ul>
