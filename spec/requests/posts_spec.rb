@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe PostsController, type: :request do
   describe 'GET index' do
     it 'returns http success' do
-      user = User.create(
+      User.create(
         name: 'John',
         bio: 'A passionate writer',
         posts_counter: 5,
