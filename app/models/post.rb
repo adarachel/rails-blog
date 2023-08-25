@@ -3,6 +3,7 @@ class Post < ApplicationRecord
   has_many :comments
   has_many :likes
 
+  attribute :content
   attribute :title, :string
   attribute :text, :text
   attribute :comments_counter, :integer, default: 0
