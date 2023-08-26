@@ -7,8 +7,13 @@ class Post < ApplicationRecord
 
   scope :get_5_comments, ->(post) { post.comments.order('created_at DESC').limit(5) }
 
+  def comment_counter
+    comments.count
+  end
+
   validates :title, presence: true
   validates :author, presence: true
   validates :title, length: { in: 1..250 }
-  validates :likes_counter, :comment_counter, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :likes_counter, numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_blank: true }
+  validates :comment_counter, numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_blank: true }
 end

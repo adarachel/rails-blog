@@ -1,16 +1,18 @@
 class User < ApplicationRecord
-  has_many :posts, foreign_key: :author_id
+  has_many :authored_posts, class_name: 'Post', foreign_key: :author_id
   has_many :comments, foreign_key: :author_id
   has_many :likes, foreign_key: :author_id
-  has_many :posts, through: :likes, foreign_key: :author_id
-  has_many :posts, through: :comments, foreign_key: :author_id
-
-  scope :three_recent_posts, ->(user) { user.posts.order('created_at desc').limit(3) }
+  has_many :liked_posts, through: :likes, source: :post
+  has_many :commented_posts, through: :comments, source: :post
 
   validates :name, presence: true
-  validates :posts_counter, numericality: { only_integer: true }, comparison: { greater_than_or_equal_to: 0 }
+  validates :posts_counter, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   def posts_counter
-    posts.count
+    authored_posts.count
+  end
+
+  def recent_posts
+    authored_posts.order(created_at: :desc).limit(3)
   end
 end

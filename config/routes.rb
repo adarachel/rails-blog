@@ -10,5 +10,7 @@ Rails.application.routes.draw do
 
   get '/users/:id/posts/:post_id', to: 'posts#show'
 
-
+  resources :users do
+    resources :posts
+  end
 end
