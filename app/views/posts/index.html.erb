@@ -1,12 +1,22 @@
-<% if @user %>
-  <h1><%= @user.name %>'s Posts</h1>
-<% end %>
+<%= render 'shared/user_profile', user: @user %>
 
-<ul>
-  <% @posts.each do |post| %>
-    <li>
-      <%= post.title %>
-      <%= link_to 'Delete', delete_post_path(post), method: :delete, data: { confirm: 'Are you sure you want to delete this post?' } %>
-    </li>
-  <% end %>
-</ul>
+<% @posts.each  do  |post|%>
+<div class="boxed comments_container">
+    <a href="/users/<%= post.author_id%>/posts/<%= post.id %>"><%= post.title%></a>
+        <p>
+           <%= post.text%>
+        </p>
+        <p class="comments_likes">
+            Comments: <%= post.comment_counter %> Likes: <%= post.likes_counter%>
+        </p>
+</div>
+<div class="boxed">
+<% Post.get_5_comments(post).each  do |comment|%>
+    <p><%= comment.author.name%> - <%= comment.text %></p>
+    <%end%>
+</div>
+<br />
+<%end%>
+<div class="buttton_container">
+<button class="all_post_btn">Pagination</button>
+</div>
