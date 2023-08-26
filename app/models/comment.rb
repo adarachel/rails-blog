@@ -1,13 +1,13 @@
 class Comment < ApplicationRecord
   belongs_to :author, class_name: 'User'
-  belongs_to :post, class_name: 'Post'
+  belongs_to :post
 
-  attribute :text, :text
+  validates :text, presence: true
 
-  after_create :update_post_comments_counter
-  after_destroy :update_post_comments_counter
+  after_save :update_comment_counter
 
-  def update_post_comments_counter
-    post.update(comments_counter: post.comments.count)
+  def update_comment_counter
+    post = Post.find_by(id: post_id)
+    post.increment!(:comment_counter)
   end
 end

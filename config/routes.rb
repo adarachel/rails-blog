@@ -1,11 +1,16 @@
 Rails.application.routes.draw do
 
-  resources :posts, only: [:index, :show]
-  get '/', to: 'home#index'
+  root 'users#index'
+
   get '/users', to: 'users#index'
+
   get '/users/:id', to: 'users#show'
-  get '/users/:user_id/posts', to: 'users#posts'
-  get '/users/:user_id/posts/:post_id', to: 'users#post'
-  post '/users/:user_id/posts', to: 'posts#create', as: :create_post
-  delete '/posts/:id', to: 'posts#destroy', as: :delete_post
+
+  get '/users/:id/posts', to: 'posts#index'
+
+  get '/users/:id/posts/:post_id', to: 'posts#show'
+
+  resources :users do
+    resources :posts
+  end
 end
