@@ -1,10 +1,13 @@
 class LikesController < ApplicationController
   def create
-    @post = Post.find(params[:post_id])
-    @like = @post.likes.build(author: current_user)
+    @like = Like.new
+    @like.author_id = current_user.id
+    @like.post_id = params[:post_id]
 
-    return unless @like.save
-
-    redirect_to user_post_path(@post.author, @post)
+    if @like.save
+      redirect_to(request.referrer || root_path)
+    else
+      render :new
+    end
   end
 end

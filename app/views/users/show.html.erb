@@ -1,18 +1,21 @@
-<div class="user_container">
-  <%= render 'shared/user_profile', user: @user %>
-</div>
+<%= render 'shared/user_profile', user: @user %>
 
-<div class="recent_posts">
-  <% @user.recent_posts.each do |post| %>
-    <h4><%= link_to post.title, user_post_path(@user, post) %></h4>
-    <p><%= post.text %></p>
+<div class="detail_container">
+  <div class="boxed">
+    <h1>Bio</h1>
     <p>
-      <small>Comments: <%= post.comments_counter || 0 %>,</small> 
-      <small>Likes: <%= post.likes_counter || 0 %></small>
+      <%= @user.bio %>
     </p>
+  </div>
+  <% @user.recent_posts.each do |post| %>
+    <div class="boxed">
+      <h1>post <%= post.title %></h1>
+      <p>
+        <%= post.text %>
+      </p>
+      <p class="comments_likes">Comments: <%= post.comment_counter %> Likes: <%= post.likes_counter %></p>
+    </div>
   <% end %>
-  
-  <button>
-    <%= link_to 'See all Posts', user_posts_path(@user) %>
-  </button>
+
+  <a href="/users/<%= @user.id%>/posts" class="all_post_btn">See all Posts</a>
 </div>
