@@ -1,19 +1,26 @@
 class Post < ApplicationRecord
-  belongs_to :author, class_name: 'User'
-  has_many :comments, foreign_key: :post_id
-  has_many :likes, foreign_key: :post_id
+  belongs_to :author, class_name: 'User', foreign_key: :author_id
+  has_many :comments
+  has_many :likes
+  after_save :update_posts_counter
+  after_initialize :set_comments_and_likes_counters
 
-  before_save -> { User.find_by(id: author.id).increment!(:posts_counter) }
+  validates :title, presence: true, length: { maximum: 250 }
+  validates :comments_counter, :likes_counter, numericality: true, comparison: { greater_than_or_equal_to: 0 }
 
-  scope :get_5_comments, ->(post) { post.comments.order('created_at DESC').limit(5) }
-
-  def comment_counter
-    comments.count
+  def update_posts_counter
+    User.find(author_id).increment!(:posts_counter)
   end
 
-  validates :title, presence: true
-  validates :author, presence: true
-  validates :title, length: { in: 1..250 }
-  validates :likes_counter, numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_blank: true }
-  validates :comment_counter, numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_blank: true }
+  # A method which returns the 5 most recent comments for a given post.
+  def recent_five_comments
+    comments.includes(:author).order(updated_at: :desc).limit(5)
+  end
+
+  private
+
+  def set_comments_and_likes_counters
+    self.likes_counter = 0 unless likes_counter
+    self.comments_counter = 0 unless comments_counter
+  end
 end

@@ -1,21 +1,15 @@
-<%= render 'shared/user_profile', user: @user %>
-
-<div class="detail_container">
-  <div class="boxed">
-    <h1>Bio</h1>
-    <p>
-      <%= @user.bio %>
-    </p>
-  </div>
-  <% @user.recent_posts.each do |post| %>
-    <div class="boxed">
-      <h1>post <%= post.title %></h1>
-      <p>
-        <%= post.text %>
-      </p>
-      <p class="comments_likes">Comments: <%= post.comment_counter %> Likes: <%= post.likes_counter %></p>
+<section>
+  <%= render partial: "shared/user", locals: { user: @user }%>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Bio</h5>
+      <p class="card-text"><%= @user.bio %></p>
     </div>
-  <% end %>
-
-  <a href="/users/<%= @user.id%>/posts" class="all_post_btn">See all Posts</a>
-</div>
+  </div>
+<section>
+<section>
+  <%= render partial: 'shared/post', collection: @user.recent_three_posts %>
+  <button>
+    <%= link_to 'See all posts', "/users/#{@user.id}/posts" %>
+  </button>
+</section>

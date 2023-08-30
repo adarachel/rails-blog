@@ -1,22 +1,8 @@
-class CommentsController < ApplicationController
-  def new
-    @comment = Comment.new
-  end
-
+lass CommentsController < ApplicationController
   def create
-    @comment = Comment.new(comment_params)
-    @comment.author_id = current_user.id
-    @comment.post_id = params[:post_id]
-    if @comment.save
-      redirect_to users_path
-    else
-      render :new
+    @comment = Comment.new(post_id: params[:post_id], author_id: current_user.id, text: params[:text])
+    respond_to do |_format|
+      redirect_to user_post_path(current_user, @comment.post_id) if @comment.save
     end
-  end
-
-  private
-
-  def comment_params
-    params.require(:comment).permit(:text)
   end
 end
