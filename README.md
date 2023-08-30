@@ -102,6 +102,12 @@ To run tests, run the following command:
 - Twitter: [@adarachel_dev](https://twitter.com/adarachel_dev)
 - LinkedIn: [@AdaRachel](https://www.linkedin.com/in/adarachel/)
 
+👤 **Dilsher Balouch**
+
+- GitHub: [@DilsherB](https://github.com/DilsherB)
+- Linkedin: [Dilsher Balouch](https://www.linkedin.com/in/dilsher-balouch/)
+- Twitter: [@\_brilliantMindz](https://twitter.com/_brilliantMindz)
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- FUTURE FEATURES -->
