@@ -15,7 +15,7 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.author = current_user
-  
+
     if @post.save
       current_user.update_posts_counter
       redirect_to users_path
