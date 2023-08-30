@@ -14,11 +14,10 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
-    @post.author_id = current_user.id
-    @post.likes_counter = 0
-    @post.comment_counter = 0
-
+    @post.author = current_user
+  
     if @post.save
+      current_user.update_posts_counter
       redirect_to users_path
     else
       render :new
