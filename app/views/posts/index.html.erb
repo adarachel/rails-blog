@@ -1,22 +1,32 @@
-<%= render 'shared/user_profile', user: @user %>
+<div class="main-container">
+ <div class="users-wrapper flex">
+    <div class="img-cont">
+      <%= image_tag @user.photo, :size => "70x80", alt: "user photo" %>
+    </div>
+    <div class="user-details">
+      <h2><%= @user.name %></h2>
+      <p>Number of posts: <%= @user.posts_counter %></p>
+    </div>
+ </div>
 
-<% @posts.each  do  |post|%>
-<div class="boxed comments_container">
-    <a href="/users/<%= post.author_id%>/posts/<%= post.id %>"><%= post.title%></a>
-        <p>
-           <%= post.text%>
-        </p>
-        <p class="comments_likes">
-            Comments: <%= post.comment_counter %> Likes: <%= post.likes_counter%>
-        </p>
-</div>
-<div class="boxed">
-<% Post.get_5_comments(post).each  do |comment|%>
-    <p><%= comment.author.name%> - <%= comment.text %></p>
-    <%end%>
-</div>
-<br />
-<%end%>
-<div class="buttton_container">
-<button class="all_post_btn">Pagination</button>
-</div>
+ <% @posts.each do |post| %>
+ <div class="posts-enclosure">
+   <div class="users-post">
+       <h2><%= link_to "Post title: #{post.title}", user_post_path(@user.id, post.id), class: "link-button" %></h2>
+       <p><%= post.text %></p>
+       <h4>Comments: <%=post.comments_counter %>, Likes: <%= post.likes_counter %></h4>
+   </div>
+   <div class="comments-cont">
+     <% if post.recent_comments.count.zero? %>
+     <p>No comments on this post yet</p>
+     <% else %>
+     <% post.recent_comments.each do |comment| %>
+       <p><%= comment.author.name %>: <%= comment.text %></p>
+     <% end %>
+     <% end %>
+   </div>
+   </div>
+ <% end %>
+
+ <button class="pagination">Pagination</button>
+ </div>

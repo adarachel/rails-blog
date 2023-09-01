@@ -1,21 +1,35 @@
-<%= render 'shared/user_profile', user: @user %>
-
-<div class="detail_container">
-  <div class="boxed">
-    <h1>Bio</h1>
-    <p>
-      <%= @user.bio %>
-    </p>
-  </div>
-  <% @user.recent_posts.each do |post| %>
-    <div class="boxed">
-      <h1>post <%= post.title %></h1>
-      <p>
-        <%= post.text %>
-      </p>
-      <p class="comments_likes">Comments: <%= post.comment_counter %> Likes: <%= post.likes_counter %></p>
+<div class="main-container">
+ <div class="users-wrapper">
+    <div class="img-cont">
+      <%= image_tag @user.photo, :size => "70x80", alt: "user photo" %>
     </div>
-  <% end %>
+    <div class="user-details">
+      <h1><%= @user.name %></h1>
+      <p>Number of posts: <%= @user.posts_counter %></p>
+    </div>
+ </div>
 
-  <a href="/users/<%= @user.id%>/posts" class="all_post_btn">See all Posts</a>
-</div>
+ <div class="user-bio">
+   <h2>Bio</h2>
+   <p><%= @user.bio %></p>
+ </div>
+
+ <div class="user-posts">
+   <% if @user.recent_posts.count.zero? %>
+   <p>User has no posts yet</p>
+   <% else %>
+   <% @user.recent_posts.each do |post| %>
+     <div class="users-post">
+       <h2><%= link_to "#{post.title}", user_post_path(@user.id, post.id), class: "link-button" %></h2>
+       <p><%= post.text %></p>
+       <h4>Comments: <%=post.comments_counter %>, Likes: <%= post.likes_counter %></h4>
+     </div>
+     <% end %>
+    <% end %>
+
+    <button class="all-post-button">
+      <%= link_to "See all posts", user_posts_path(@user), class: "all-posts" %>
+    </button>
+    <button class="create-post-button"type="button"><%= link_to "Create a post", new_user_post_path(@user), class: "create-post"  %></button>
+ <div>
+ </div>

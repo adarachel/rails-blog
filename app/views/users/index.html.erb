@@ -1,8 +1,14 @@
-<div>
-    <a href="/users/new/posts/new"> New Post</a>
-</div>
+<div class="main-container">
 <% @users.each do |user| %>
-
-<%= render 'shared/user_profile', user: user %>
-
-<% end %>
+  <div class="users-wrapper">
+    <div class="img-cont">
+      <%= image_tag user.photo, :size => "70x85", alt: "user photo" %>
+    </div>
+    <div class="user-details">
+      <h1><%= link_to user.name, user, class: "link-button"  %></h1>
+      <p>Number of posts: <%= user.posts_counter %></p>
+    </div>
+  </div>
+  
+<%end%>
+</div>
