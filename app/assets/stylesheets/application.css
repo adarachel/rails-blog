@@ -63,7 +63,7 @@ body {
   margin-top: 3%;
 }
 
-.user-details>p {
+.user-details > p {
   text-align: end;
 }
 
@@ -73,12 +73,12 @@ body {
   margin-top: 4%;
 }
 
-.user-posts>button {
+.user-posts > button {
   margin-top: 3rem;
   margin-left: 40%;
 }
 
-.users-post>h4 {
+.users-post > h4 {
   text-align: end;
 }
 
@@ -92,7 +92,7 @@ body {
   margin-bottom: 5%;
 }
 
-.post-container>h6 {
+.post-container > h6 {
   text-align: end;
 }
 
@@ -131,6 +131,7 @@ body {
 .create-post {
   border: gray;
   text-decoration: none;
+
   /* no underline */
   color: black;
 }
@@ -175,6 +176,7 @@ body {
 .link-login {
   border: gray;
   text-decoration: none;
+
   /* no underline */
   color: black;
 }
