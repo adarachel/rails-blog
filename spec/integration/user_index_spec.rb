@@ -1,35 +1,41 @@
 require 'rails_helper'
 
-RSpec.feature 'User Index Page', type: :feature do
-  let(:users) do
-    [
-      User.create(name: 'Ahmed', photo: 'https://unsplash.com/photos/F_-0BxGuVvo',
-                  bio: 'Teacher from Poland.', posts_counter: 0),
-      User.create(name: 'Ali', photo: 'https://unsplash.com/photos/abc123',
-                  bio: 'Engineer from USA.', posts_counter: 2),
-      User.create(name: 'Alice', photo: 'https://unsplash.com/photos/xyz456',
-                  bio: 'Artist from France.', posts_counter: 5)
-    ]
+RSpec.describe 'User Index', type: :feature do
+  before :each do
+    @user1 = User.create(
+      name: 'Adele',
+      photo: 'https://cdn-icons-png.flaticon.com/512/3220/3220315.png',
+      bio: 'Artist',
+      posts_counter: 3
+    )
+    @user2 = User.create(
+      name: 'Julian',
+      photo: 'https://cdn-icons-png.flaticon.com/512/4128/4128176.png',
+      bio: 'Engineer',
+      posts_counter: 0
+    )
+    visit root_path
   end
 
-  before do
-    users
-    visit users_path
+  it 'should have the username of all users' do
+    expect(page).to have_content(@user1.name)
+    expect(page).to have_content(@user2.name)
   end
 
-  scenario 'I can see the username, profile picture, and number of posts for each user' do
-    users.each do |user|
-      expect(page).to have_content(user.name)
-      expect(page).to have_selector('img[alt="User profile photo"]')
-      expect(page).to have_content(user.posts_counter)
-    end
+  it 'should have the photo of each user' do
+    assert page.has_xpath?("//img[@src = 'https://cdn-icons-png.flaticon.com/512/3220/3220315.png'
+    and @alt = 'user photo']")
+    assert page.has_xpath?("//img[@src = 'https://cdn-icons-png.flaticon.com/512/4128/4128176.png'
+    and @alt = 'user photo']")
   end
 
-  scenario 'When I click on a user, I am redirected to their show page' do
-    users.each do |user|
-      click_on user.name
-      expect(current_path).to eq(user_path(user))
-      visit users_path # Go back to the user index page for the next iteration
-    end
+  it 'should have the users number of posts' do
+    expect(page).to have_content('Number of posts: 3')
+    expect(page).to have_content('Number of posts: 0')
+  end
+
+  it 'should redirect to that users show page on click' do
+    click_link(@user1.name)
+    expect(page).to have_current_path user_path(@user1.id)
   end
 end
